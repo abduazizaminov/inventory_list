@@ -1,3 +1,19 @@
+body {
+  background: var(--darken-color);
+  user-select: none;
+}
+.h-10 {
+  height: 10px;
+}
+.w-full {
+  width: 100%;
+}
+.container {
+  background-color: var(--darken-color-2);
+  border: 1px solid var(--primary-border);
+  border-radius: 12px;
+}
+
 @keyframes pulse {
   0%, 100% {
     opacity: 1;

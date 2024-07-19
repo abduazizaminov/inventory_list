@@ -1,0 +1,1 @@
+export { useInventoryStore as inventoryModel } from "./inventory";
