@@ -5,8 +5,8 @@
       :list="inventoryStore.list"
       @end="onDragEnd"
     >
-      <div v-for="el in inventoryStore.list" :key="el.id" class="column">
-        <InventoryBlock :img="el.img" :id="el.id" :count="el.count ?? 0"></InventoryBlock>
+      <div @click="emit('openModal', el)" v-for="el in inventoryStore.list" :key="el.id" class="column">
+        <InventoryBlock  :img="el.img" :id="el.id" :count="el.count ?? 0"></InventoryBlock>
         <div v-if="el.count" class="inventory_count">
           {{ el.count }}
         </div>
@@ -19,10 +19,11 @@
 import InventoryBlock from '@/components/inventory/index.vue';
 import { VueDraggableNext } from 'vue-draggable-next';
 import { inventoryModel } from '@/entities/inventory';
-import { onMounted } from 'vue';
+import { onMounted, defineEmits } from 'vue';
+import type { Inventory } from '@/shared/types' 
 
 const inventoryStore = inventoryModel();
-
+const emit = defineEmits(['openModal'])
 onMounted(() => {
   inventoryStore.setListItems();
 });
@@ -30,6 +31,10 @@ onMounted(() => {
 const onDragEnd = () => {
   inventoryStore.saveListToLocalStorage();
 };
+
+const log = (el: Inventory) => {
+  console.log(el)
+}
 </script>
 
 <style scoped lang="scss">
@@ -44,6 +49,12 @@ const onDragEnd = () => {
   position: relative;
   border-top: 1px solid var(--primary-color);
   border-left: 1px solid var(--primary-color);
+  cursor: pointer;
+  transition: all 0.1s linear;
+
+  &:hover {
+    background-color: var(--hover-bg);
+  }
   
   &:nth-child(5n + 1) {
     border-left: none;
@@ -53,7 +64,9 @@ const onDragEnd = () => {
   }
 }
 .inventory_count {
+  background-color: var(--darken-color-2);
   position: absolute;
+  border-top-left-radius: 6px;
   bottom: 0;
   right: 0;
   padding: 2px 4px;

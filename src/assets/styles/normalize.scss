@@ -11,6 +11,11 @@ input {
   border: none;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
 *:before,
 *:after {
     box-sizing: border-box;
